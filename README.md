@@ -9,7 +9,7 @@ Currently supported data types:
 - **Bonds** → Any bond available on *Borsa Italiana*
 - **ETPs** → Any ETP (ETF/ETC/ETN) available on *JustETF*, priced in EUR (exchange may vary: Xetra, LSE, etc.)
 - **Crypto** → Any cryptocurrency listed on *CoinMarketCap* via their official API
-- **Commodities** → Spot prices (currently Gold in EUR per gram; more assets coming soon)
+- **Commodities** → Spot prices (currently Gold in EUR per gram more assets coming soon)
 
 ---
 
