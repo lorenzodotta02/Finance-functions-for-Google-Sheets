@@ -57,7 +57,7 @@ Currently supported data types:
 ### Option 2 – Use the Latest Release File
 
 1. In your Google Spreadsheet, go to **Extensions → Apps Script**.
-2. Download and paste the single consolidated script file from the [Latest Release](https://github.com/lorenzodotta02/..).
+2. Download and paste the single consolidated script file from the [Latest Release](https://github.com/lorenzodotta02/Finance-functions-for-Google-Sheets/releases).
 
 ### Step 2 – Add the CoinMarketCap API Key
 
