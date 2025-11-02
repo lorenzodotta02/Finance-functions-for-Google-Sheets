@@ -1,41 +1,49 @@
-function goldPrice() {
-  var url = 'https://www.teleborsa.it/valute/gold-spot-xauusd-RjAuWEFVVVNE';
+function commodityPrice(name) {
+  name = name.toLowerCase().trim();
+
+  const urls = {
+    gold: "https://www.teleborsa.it/valute/gold-spot-xauusd-RjAuWEFVVVNE",
+    silver: "https://www.teleborsa.it/valute/silver-spot-xagusd-RjAuWEFHVVNE",
+    palladium: "https://www.teleborsa.it/valute/palladium-spot-xpdusd-RjAuWFBEVVNE",
+    platinum: "https://www.teleborsa.it/valute/platinum-spot-xptusd-RjAuWFBUVVNE" 
+  };
+
+  const url = urls[name];
+  if (!url) throw new Error(`Commodity not supported: ${name}`);
 
   try {
-    var response = UrlFetchApp.fetch(url, { muteHttpExceptions: true });
+    const response = UrlFetchApp.fetch(url, { muteHttpExceptions: true });
     if (response.getResponseCode() !== 200) {
       throw new Error("HTTP error: " + response.getResponseCode());
     }
 
-    var html = response.getContentText();
-    var pMatches = html.match(/<p[^>]*>(.*?)<\/p>/gi);
-    var text = '';
+    const html = response.getContentText();
 
+    const pMatches = html.match(/<p[^>]*>(.*?)<\/p>/gi);
+    let text = '';
     if (pMatches) {
-      text = pMatches.map(function(p) {
-        return p.replace(/<[^>]+>/g, '');
-      }).join(' ');
+      text = pMatches.map(p => p.replace(/<[^>]+>/g, '')).join(' ');
     }
 
-    var regex = /(\d{1,3},\d{3})/;
-    var priceMatch = text.match(regex);
-    var priceStr = priceMatch ? priceMatch[1] : '';
+    var regex = /(\d{1,3},\d{2,3})/;
+    const priceMatch = text.match(regex);
+    const priceStr = priceMatch ? priceMatch[1] : '';
 
     if (!priceStr) {
-      throw new Error("Gold price not found in the page, using saved price");
+      throw new Error(`${name} price not found in the page, using saved price`);
     }
 
-    var price = parseFloat(priceStr.replace(/\./g, '').replace(',', '.'));
+    const price = parseFloat(priceStr.replace(/\./g, '').replace(',', '.'));
 
     if (isNaN(price) || price <= 0) {
-      throw new Error("Invalid gold price extracted: " + priceStr);
+      throw new Error(`Invalid ${name} price extracted: ${priceStr}`);
     }
 
-    savePrice("Last gold price", price);
+    savePrice(`Last ${name} price`, price);
     return price;
 
   } catch (err) {
-    Logger.log("Error fetching gold price: " + err.message);
-    return loadPrice("Last gold price");
+    Logger.log(`Error fetching ${name} price: ${err.message}`);
+    return loadPrice(`Last ${name} price`);
   }
 }
