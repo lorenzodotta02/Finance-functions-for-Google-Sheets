@@ -1,5 +1,5 @@
 function bondPrice(isin) {
-  var url = 'https://www.borsaitaliana.it/borsa/obbligazioni/mot/obbligazioni-in-euro/scheda/' + isin + '.html?lang=it';
+  var url = URL_BOND + isin + ".html?lang=it";
 
   try {
     var response = UrlFetchApp.fetch(url, { muteHttpExceptions: true });
@@ -8,8 +8,7 @@ function bondPrice(isin) {
     }
 
     var content = response.getContentText();
-    var regex = /(\d{2,3},\d{1,3})/;
-    var matches = content.match(regex);
+    var matches = content.match(REGEX_BOND_PRICE);
 
     if (!matches || matches.length === 0) {
       throw new Error("Price not found");
