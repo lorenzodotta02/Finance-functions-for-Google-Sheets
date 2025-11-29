@@ -1,17 +1,24 @@
 /**
- * Returns the current market price of an ETP using the JustETF API.
+ * Returns the current market price of an ETP
  *
- * Currently supports:
- *   - Any ETP (ETF/ETC/ETN) available on JustETF, priced in EUR.
- *   - The exchange may vary (commonly XETRA, but also LSE or others).
- *
- * @param {string} date The reference date cell (Utils!$A$1).
- *                      This can be used to trigger updates in the sheet.
- * @param {string} isin The ISIN code of the ETP to fetch the price for.
- *                      Must be a valid ISIN recognized by JustETF.
- * @returns {number} The current market price of the specified ETP in EUR.
+ * @param {Utils!$A$1} date The reference date cell (Utils!$A$1)
+ *                          This is required to ensure that price quotes stay updated
+ * @param {"IE00BK5BQT80" or "VWCE.DE"} code The ISIN or Yahoo Finance TICKER.SUFFIX
+ * @param {"XETR"} stockExchange OPTIONAL The stock exchange operating MIC (ISO 10383)
+ * @return {number} Current market price in EUR
  * @customfunction
  */
-function ETPPRICE(date, isin) {
-    return etpPrice(isin);
+
+function ETPPRICE(date, code, stockExchange) {
+  const isinRegex = /^[A-Z]{2}[A-Z0-9]{10}$/;
+
+  if (stockExchange) {
+    return etpPriceByIsin_stockExchange(code, stockExchange);
+  }
+
+  if (isinRegex.test(code)) {
+    return etpPriceByIsin(code);
+  }
+
+  return etpPriceByTicker(code);
 }
