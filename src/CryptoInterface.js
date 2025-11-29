@@ -3,12 +3,11 @@
  * CoinMarketCap API.
  *
  * Currently supports:
- *   - Any cryptocurrency listed on CoinMarketCap by its official symbol
- *     (e.g., "BTC", "ETH", "ADA").
+ * Any cryptocurrency listed on CoinMarketCap by its official symbol
  *
- * @param {string} date The reference date cell (Utils!$A$1).
- *                      This can be used to trigger updates in the sheet.
- * @param {string} symbol The official symbol of the cryptocurrency.
+ * @param {Utils!$A$1} date The reference date cell (Utils!$A$1)
+ *                          This is required to ensure that price quotes stay updated
+ * @param {"BTC"} symbol The official symbol of the cryptocurrency.
  *                        Must be a valid symbol recognized by CoinMarketCap.
  * @returns {number} The current market price of the specified cryptocurrency in EUR.
  * @customfunction
