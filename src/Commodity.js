@@ -1,14 +1,7 @@
 function commodityPrice(name) {
   name = name.toLowerCase().trim();
 
-  const urls = {
-    gold: "https://www.teleborsa.it/valute/gold-spot-xauusd-RjAuWEFVVVNE",
-    silver: "https://www.teleborsa.it/valute/silver-spot-xagusd-RjAuWEFHVVNE",
-    palladium: "https://www.teleborsa.it/valute/palladium-spot-xpdusd-RjAuWFBEVVNE",
-    platinum: "https://www.teleborsa.it/valute/platinum-spot-xptusd-RjAuWFBUVVNE" 
-  };
-
-  const url = urls[name];
+  const url = URL_COMMODITY[name];
   if (!url) throw new Error(`Commodity not supported: ${name}`);
 
   try {
@@ -25,8 +18,7 @@ function commodityPrice(name) {
       text = pMatches.map(p => p.replace(/<[^>]+>/g, '')).join(' ');
     }
 
-    var regex = /(\d{1,3},\d{2,3})/;
-    const priceMatch = text.match(regex);
+    const priceMatch = text.match(REGEX_COMMODITY_PRICE);
     const priceStr = priceMatch ? priceMatch[1] : '';
 
     if (!priceStr) {
