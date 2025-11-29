@@ -1,15 +1,15 @@
-# Finance functions for Google Sheets
+# Finance Functions for Google Sheets
 
-A collection of **custom Google Sheets functions** that extend the limited `GOOGLEFINANCE` functionality.
+A collection of **custom Google Sheets functions** that extend the limited built-in `GOOGLEFINANCE` functionality.
 
-These functions fetch/scrape **real-time or near real-time financial data** — including bonds, ETFs, crypto, and commodities — from multiple APIs and websites.
+These functions fetch **real-time or near real-time quotes** of bonds, ETFs, crypto, and commodities — from multiple APIs and websites.
 
-Currently supported data types:
+Currently supported asset types:
 
-- **Bonds** → Any bond available on *Borsa Italiana*
-- **ETPs** → Any ETP (ETF/ETC/ETN) available on *JustETF*, priced in EUR (exchange may vary: Xetra, LSE, etc.)
+- **Bonds** → Any bond listed on *Borsa Italiana*
+- **ETPs** → Any ETF/ETC/ETN available on *JustETF* and *Yahoo Finance*
 - **Crypto** → Any cryptocurrency listed on *CoinMarketCap* via their official API
-- **Commodities** → Spot prices (Gold, Silver, Platinum, Palladium in EUR per gram)
+- **Commodities** → Spot prices for Gold, Silver, Platinum, and Palladium (EUR per gram)
 
 ---
 
@@ -17,30 +17,66 @@ Currently supported data types:
 
 | Function Name | Description |
 | --- | --- |
-| `ETPPRICE(dateCell; isin)` | Returns the latest price for the specified ETP (from JustETF). |
-| `BONDPRICE(dateCell; isin)` | Returns the latest price of a bond using the provided ISIN. |
-| `CRYPTOPRICE(dateCell; symbol)` | Returns the latest price of a cryptocurrency using the CoinMarketCap API. |
-| `COMMODITYPRICE(dateCell; name)` | Returns the latest spot price of a commodity. |
+| `ETPPRICE(date; code; stockExchange)` | Returns the latest price for an ETP. Accepts **ISIN**, **Yahoo ticker** or **ISIN + MIC**. |
+| `BONDPRICE(date; isin)` | Returns the latest price of a bond using the provided ISIN. |
+| `CRYPTOPRICE(date; symbol)` | Returns the latest cryptocurrency price using the CoinMarketCap API. |
+| `COMMODITYPRICE(date; name)` | Returns the latest spot price of a commodity. |
 
-> Note: dateCell must always be Utils!$A$1.
+> Mandatory: dateCell must always be Utils!$A$1.
 > 
 > 
-> This reference cell is automatically updated by the script every 15 minutes and is used to **force a recalculation** of your custom functions whenever its value changes.
+> This cell updates every 15 minutes and forces recalculation.
 > 
-> ⚠️ **Important:** The functions use a semicolon (`;`) as the argument separator (e.g., `=ETPPRICE(Utils!$A$1; "IE00BK5BQT80")`) because the Google Sheets locale is **European.**
-> 
-> If you are using the **U.S. locale**, replace `;` with a comma (`,`).
-> 
+
+⚠️ **European locale uses `;` as the separator**
+
+If you're using the **U.S. locale**, replace semicolons with commas.
+
+---
+
+## Input accepted by `ETPPRICE()`
+
+| Input Type | Example | Behavior |
+| --- | --- | --- |
+| **ISIN** | `"IE00BK5BQT80"` | The script returns the price from a random stock exchange. |
+| **Yahoo Finance ticker** | `"VWCE.DE"` | Price is retrieved directly from Yahoo Finance. |
+| **ISIN + MIC** | `"IE00BK5BQT80"; "XETR"` | Price is fetched from the specified stock exchange. |
+
+### Supported Stock Exchanges for **ISIN + MIC**
+
+| Operating MIC | Exchange Name (JustETF) |
+| --- | --- |
+| **XETR** | XETRA |
+| **XLON** | London Stock Exchange |
+| **XMIL** | Borsa Italiana |
+| **XAMS** | Euronext Amsterdam |
+| **XPAR** | Euronext Paris |
+| **XSWX** | SIX Swiss Exchange |
+| **XSTU** | Stuttgart Stock Exchange |
+| **XMUN** | Gettex |
+| **TGAT** | Tradegate |
+
+Operating MIC from ISO 10383
+
+### Supported Stock Exchanges for **Yahoo Finance ticker**
+
+All exchanges supported by Yahoo Finance. More info [HERE](https://help.yahoo.com/kb/SLN2310.html).
 
 ---
 
 ## 📌 Example Functions
 
 ```
-=ETPPRICE(Utils!$A$1; "IE00BK5BQT80")     // Returns the price of VWCE
-=BONDPRICE(Utils!$A$1; "IT0005433195")    // Returns the price of BTP Tf 0,95% Mz37 Eur
-=CRYPTOPRICE(Utils!$A$1; "BTC")           // Returns the price of Bitcoin
-=COMMODITYPRICE(Utils!$A$1; "Gold")       // Returns the price of Gold (EUR/gram)
+=ETPPRICE(Utils!$A$1; "IE00BK5BQT80")                // Price of VWCE from a random exchange
+=ETPPRICE(Utils!$A$1; "IE00BK5BQT80"; "XETR")        // Price of VWCE from XETRA
+=ETPPRICE(Utils!$A$1; "VWCE.DE")                     // Price of VWCE via Yahoo Finance
+
+=BONDPRICE(Utils!$A$1; "IT0005433195")               // Price of BTP Tf 0.95% Mz37
+
+=CRYPTOPRICE(Utils!$A$1; "BTC")                      // Bitcoin price
+
+=COMMODITYPRICE(Utils!$A$1; "Gold")                  // Gold price (EUR/gram)
+
 ```
 
 ---
@@ -49,25 +85,18 @@ Currently supported data types:
 
 ### Step 1 – Add the Script
 
-### Option 1 – Manually via Google Apps Script
+1. In Google Sheets, open **Extensions → Apps Script**.
+2. Download and paste the full script from the [Latest Release](https://github.com/lorenzodotta02/Finance-functions-for-Google-Sheets/releases).
 
-1. In your Google Spreadsheet, go to **Extensions → Apps Script**.
-2. Copy and paste the contents of the files from the `src/` folder into the script editor.
+### Step 2 – Add the CoinMarketCap API Key (optional)
 
-### Option 2 – Use the Latest Release File
+Required only for `CRYPTOPRICE`.
 
-1. In your Google Spreadsheet, go to **Extensions → Apps Script**.
-2. Download and paste the single consolidated script file from the [Latest Release](https://github.com/lorenzodotta02/Finance-functions-for-Google-Sheets/releases).
-
-### Step 2 – Add the CoinMarketCap API Key
-
-To use `CRYPTOPRICE`, you must add your **CoinMarketCap API key** to the Script Properties.
-
-1. In the Apps Script editor, click **Project Settings (⚙️)** → **Script Properties** → **Add Property**.
+1. In the Apps Script editor, go to **Project Settings (⚙️)** → **Script Properties** → **Add Property**.
 2. Create a new property with:
     - **Property (key):** `CMC_API_KEY`
     - **Value:** *your CoinMarketCap API key*
-3. Save your changes.
+3. Save the property.
 
 ### Step 3 – Activate the Script
 
@@ -85,4 +114,6 @@ To use `CRYPTOPRICE`, you must add your **CoinMarketCap API key** to the Script 
 
 # 📜 License
 
-This project is licensed under the **GNU General Public License v3.0** – see the LICENSE file for details.
+This project is licensed under the **GNU General Public License v3.0**.
+
+See the LICENSE file for full terms.
