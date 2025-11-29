@@ -12,7 +12,7 @@ function onOpen() {
 
 function createAutoTrigger() {
   var triggers = ScriptApp.getProjectTriggers();
-  var triggerExists = triggers.some(function(trigger) {
+  var triggerExists = triggers.some(function (trigger) {
     return trigger.getHandlerFunction() === "autoUpdate";
   });
 
@@ -32,7 +32,7 @@ function createAutoTrigger() {
 
 function deleteAutoUpdateTrigger() {
   var triggers = ScriptApp.getProjectTriggers();
-  triggers.forEach(function(trigger) {
+  triggers.forEach(function (trigger) {
     if (trigger.getHandlerFunction() === "autoUpdate") {
       ScriptApp.deleteTrigger(trigger);
     }
@@ -76,8 +76,11 @@ function savePrice(key, value) {
 
 function loadPrice(key) {
   Logger.log("Loaded from memory");
-  return PropertiesService.getScriptProperties().getProperty(key);
+  const v = PropertiesService.getScriptProperties().getProperty(key);
+  return v ? parseFloat(v) : null;
 }
+
+
 
 function writeToSheet(cell, number) {
   var sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
