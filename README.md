@@ -44,7 +44,7 @@ If you're using the **U.S. locale**, replace semicolons with commas.
 
 ### Supported Stock Exchanges for **ISIN + MIC**
 
-| Operating MIC | Exchange Name (JustETF) |
+| Operating MIC | Exchange Name |
 | --- | --- |
 | **XETR** | XETRA |
 | **XLON** | London Stock Exchange |
