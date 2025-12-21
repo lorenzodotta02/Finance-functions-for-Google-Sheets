@@ -49,9 +49,10 @@ const REGEX_EXCHANGE_TABLE = /Exchange|Ticker/i;
 // Bonds.gs
 // =======================================================================================================
 
-const URL_BOND = "https://www.borsaitaliana.it/borsa/obbligazioni/mot/obbligazioni-in-euro/scheda/";
-const REGEX_BOND_PRICE = /(\d{2,3},\d{1,3})/;
-const USER_AGENT_BOND = "Mozilla/5.0";
+const URL_EURONEXT_INTRADAY = "https://live.euronext.com/en/intraday_chart/getDetailedQuoteAjax/";
+const URL_EURONEXT_FALLBACK = "https://live.euronext.com/en/ajax/getDetailedQuote/";
+const REGEX_EURONEXT_LAST_TRADED = /Last Traded[\s\S]*?font-weight-medium">\s*([\d.,]+)/i;
+const REGEX_EURONEXT_VALUATION_CLOSE = /id="col-header-instrument-price"[^>]*>\s*([\d.,]+)/i;
 
 // =======================================================================================================
 // Crypto.gs
