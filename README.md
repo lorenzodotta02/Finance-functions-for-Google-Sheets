@@ -1,6 +1,6 @@
 # Finance Functions for Google Sheets
 
-A collection of **custom Google Sheets functions** that extend the limited built-in `GOOGLEFINANCE` functionality.
+A collection of custom Google Sheets functions designed as an alternative to `GOOGLEFINANCE()`
 
 These functions fetch **real-time or near real-time quotes** of bonds, ETFs, crypto, and commodities — from multiple APIs and websites.
 
