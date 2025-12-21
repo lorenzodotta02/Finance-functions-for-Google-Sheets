@@ -80,8 +80,6 @@ function loadPrice(key) {
   return v ? parseFloat(v) : null;
 }
 
-
-
 function writeToSheet(cell, number) {
   var sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
   sheet.getRange(cell).setValue(number);
