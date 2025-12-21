@@ -1,35 +1,50 @@
-function bondPrice(isin) {
-  var url = URL_BOND + isin + ".html?lang=it";
-
+function bondPrice(isin, stockExchange) {
+  Logger.log(isin);
+  var urlIntraday = URL_EURONEXT_INTRADAY + isin + "-" + stockExchange + "/full";
   try {
-    var response = UrlFetchApp.fetch(url, { muteHttpExceptions: true });
-    if (response.getResponseCode() !== 200) {
-      throw new Error("HTTP error: " + response.getResponseCode());
+    var r1 = UrlFetchApp.fetch(urlIntraday, { muteHttpExceptions: true });
+    var code1 = r1.getResponseCode();
+    Logger.log("Intraday HTTP Status: " + code1);
+
+    if (code1 === 200) {
+      var html1 = r1.getContentText();
+
+      var m1 = html1.match(REGEX_EURONEXT_LAST_TRADED);
+      if (m1) {
+        var priceStr = m1[1].trim();
+        var price = parseFloat(priceStr.replace(",", "."));
+
+        if (!isNaN(price) && price > 0) {
+          savePrice(isin, price);
+          return price;
+        }
+      }
     }
 
-    var content = response.getContentText();
-    var matches = content.match(REGEX_BOND_PRICE);
+    Logger.log("Last Traded not found");
 
-    if (!matches || matches.length === 0) {
-      throw new Error("Price not found");
-    }
+    var urlFallback = URL_EURONEXT_FALLBACK + isin + "-" + stockExchange;
+    var r2 = UrlFetchApp.fetch(urlFallback, { muteHttpExceptions: true });
+    var code2 = r2.getResponseCode();
+    Logger.log("Fallback HTTP Status: " + code2);
 
-    var priceStr = matches[0];
-    var price = parseFloat(priceStr.replace(/\./g, '').replace(',', '.'));
+    if (code2 !== 200) throw new Error("Fallback HTTP error: " + code2);
 
-    if (isNaN(price)) {
-      throw new Error("Invalid price: " + priceStr);
-    }
+    var html2 = r2.getContentText();
+    var m2 = html2.match(REGEX_EURONEXT_VALUATION_CLOSE);
 
-    if (price === 0) {
-      throw new Error("Price is 0 bond not traded");
-    }
+    if (!m2) throw new Error("Valuation Close price not found");
 
-    savePrice(isin, price);
-    return price;
+    var closeStr = m2[1].trim();
+    var closePrice = parseFloat(closeStr.replace(",", "."));
+
+    if (isNaN(closePrice)) throw new Error("Invalid close price: " + closeStr);
+
+    savePrice(isin, closePrice);
+    return closePrice;
 
   } catch (err) {
-    Logger.log("Error during fetch/price: " + err.message);
+    Logger.log("ERROR bondPrice(): " + err.message);
     return loadPrice(isin);
   }
 }
