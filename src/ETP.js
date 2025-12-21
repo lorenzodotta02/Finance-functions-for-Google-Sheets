@@ -6,6 +6,15 @@ function etpPriceByIsin_stockExchange(isin, mic) {
     if (!cfg) throw new Error("Unsupported MIC " + mic);
 
     const targetExchange = cfg.jetf.toUpperCase();
+
+    if (targetExchange === "TRADEGATE") {
+      const price = etpPriceTradegate(isin);
+      if (!price) throw new Error("TRADEGATE no price");
+
+      savePrice(key, price);
+      return price;
+    }
+
     const tickerData = resolveTickerByExchange(isin, targetExchange);
     if (!tickerData) throw new Error("Ticker not found for " + targetExchange);
 
@@ -15,14 +24,6 @@ function etpPriceByIsin_stockExchange(isin, mic) {
 
       const price = etfPriceGettex(isin, ric);
       if (!price) throw new Error("GETTEX no price");
-
-      savePrice(key, price);
-      return price;
-    }
-
-    if (targetExchange === "TRADEGATE") {
-      const price = etpPriceTradegate(isin);
-      if (!price) throw new Error("TRADEGATE no price");
 
       savePrice(key, price);
       return price;
@@ -161,10 +162,13 @@ function etpPriceTradegate(isin) {
       throw new Error("HTTP " + res.getResponseCode());
 
     const data = JSON.parse(res.getContentText());
-    const last = parseFloat(data?.last);
+    const lastRaw = data?.last;
+    if (!lastRaw) throw new Error("Missing last");
 
-    if (!last || isNaN(last))
-      throw new Error("Invalid price");
+    const last = parseFloat(String(lastRaw).replace(",", "."));
+
+    if (isNaN(last))
+      throw new Error("Invalid price after conversion");
 
     return last;
 
