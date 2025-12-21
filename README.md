@@ -1,114 +1,146 @@
-# Finance Functions for Google Sheets
+# **Finance Functions for Google Sheets**
 
 A collection of custom Google Sheets functions designed as an alternative to `GOOGLEFINANCE()`
 
-These functions fetch **real-time or near real-time quotes** of bonds, ETFs, crypto, and commodities — from multiple APIs and websites.
-
-Currently supported asset types:
-
-- **Bonds** → Any bond listed on *Borsa Italiana*
-- **ETPs** → Any ETF/ETC/ETN available on *JustETF* and *Yahoo Finance*
-- **Crypto** → Any cryptocurrency listed on *CoinMarketCap* via their official API
-- **Commodities** → Spot prices for Gold, Silver, Platinum, and Palladium (EUR per gram)
-
----
-
-## ⚙️ Custom Functions Overview
-
-| Function Name | Description |
-| --- | --- |
-| `ETPPRICE(date; code; stockExchange)` | Returns the latest price for an ETP. Accepts **ISIN**, **Yahoo ticker** or **ISIN + MIC**. |
-| `BONDPRICE(date; isin)` | Returns the latest price of a bond using the provided ISIN. |
-| `CRYPTOPRICE(date; symbol)` | Returns the latest cryptocurrency price using the CoinMarketCap API. |
-| `COMMODITYPRICE(date; name)` | Returns the latest spot price of a commodity. |
-
-> Mandatory: dateCell must always be Utils!$A$1.
-> 
-> 
-> This cell updates every 15 minutes and forces recalculation.
-> 
-
-⚠️ **European locale uses `;` as the separator**
-
-If you're using the **U.S. locale**, replace semicolons with commas.
-
----
-
-## Input accepted by `ETPPRICE()`
-
-| Input Type | Example | Behavior |
-| --- | --- | --- |
-| **ISIN** | `"IE00BK5BQT80"` | The script returns the price from a random stock exchange. |
-| **Yahoo Finance ticker** | `"VWCE.DE"` | Price is retrieved directly from Yahoo Finance. |
-| **ISIN + MIC** | `"IE00BK5BQT80"; "XETR"` | Price is fetched from the specified stock exchange. |
-
-### Supported Stock Exchanges for **ISIN + MIC**
-
-| Operating MIC | Exchange Name |
-| --- | --- |
-| **XETR** | XETRA |
-| **XLON** | London Stock Exchange |
-| **XMIL** | Borsa Italiana |
-| **XAMS** | Euronext Amsterdam |
-| **XPAR** | Euronext Paris |
-| **XSWX** | SIX Swiss Exchange |
-| **XSTU** | Stuttgart Stock Exchange |
-| **XMUN** | Gettex |
-| **TGAT** | Tradegate |
-
-Operating MIC from ISO 10383
-
-### Supported Stock Exchanges for **Yahoo Finance ticker**
-
-All exchanges supported by Yahoo Finance. More info [HERE](https://help.yahoo.com/kb/SLN2310.html).
-
----
-
-## 📌 Example Functions
-
-```
-=ETPPRICE(Utils!$A$1; "IE00BK5BQT80")                // Price of VWCE from a random exchange
-=ETPPRICE(Utils!$A$1; "IE00BK5BQT80"; "XETR")        // Price of VWCE from XETRA
-=ETPPRICE(Utils!$A$1; "VWCE.DE")                     // Price of VWCE via Yahoo Finance
-
-=BONDPRICE(Utils!$A$1; "IT0005433195")               // Price of BTP Tf 0.95% Mz37
-
-=CRYPTOPRICE(Utils!$A$1; "BTC")                      // Bitcoin price
-
-=COMMODITYPRICE(Utils!$A$1; "Gold")                  // Gold price (EUR/gram)
-
-```
+These functions retrieve **updated prices** for:
+- **Bonds**
+- **ETPs (ETFs / ETCs / ETNs)**
+- **Cryptocurrencies** 
+- **Commodities** 
 
 ---
 
 # 🚀 Installation
 
-### Step 1 – Add the Script
+Tutorial [here](./INSTALLATION.md)
 
-1. In Google Sheets, open **Extensions → Apps Script**.
-2. Download and paste the full script from the [Latest Release](https://github.com/lorenzodotta02/Finance-functions-for-Google-Sheets/releases).
+---
 
-### Step 2 – Add the CoinMarketCap API Key (optional)
+# ⚙️ **Available Custom Functions**
 
-Required only for `CRYPTOPRICE`.
+| Function | Purpose |
+| --- | --- |
+| `ETPPRICE(date; code; stockExchange)` | Returns the latest price for an ETP |
+| `BONDPRICE(date; isin; stockExchange)` | Returns the latest price for a bond |
+| `CRYPTOPRICE(date; symbol)` | Returns the latest cryptocurrency price  |
+| `COMMODITYPRICE(date; name)` | Returns the latest spot price of a commodity (EUR/gram) |
 
-1. In the Apps Script editor, go to **Project Settings (⚙️)** → **Script Properties** → **Add Property**.
-2. Create a new property with:
-    - **Property (key):** `CMC_API_KEY`
-    - **Value:** *your CoinMarketCap API key*
-3. Save the property.
+> Important: date must always be Utils!$A$1, this cell auto-refreshes every 15 minutes and forces recalculation.
+> 
 
-### Step 3 – Activate the Script
+> If you use the US locale, replace semicolons ; with commas.
+> 
 
-1. **Save and reload** your Google Sheets page.
-2. A new custom menu will appear in the toolbar (see below).
-    - Click **⏱ → Create trigger (15 min)** to enable automatic updates.
-    - Accept all authorization requests that appear — these are required for the script to run correctly.
-    - You can later select **Remove trigger** to disable it.
-    
-    <img src="images/1.png" alt="Menu screenshot" width="420"/>
-    
-3. Once the trigger is active, you can use the functions directly in your sheet.
+---
+
+# 📥 **Function Inputs Explained in Detail**
+
+## **1️⃣ ETPPRICE(date; code; [stockExchange])**
+
+Fetches the price of an ETF/ETC/ETN.
+
+### **Parameters:**
+
+- `date` → always `Utils!$A$1`
+- `code` → ISIN code/Yahoo Finance ticker
+- `stockExchange` → **MIC code (ISO 10383)** of the market where the ETP is traded
+
+### **Optional parameter: `stockExchange`**
+
+This is only needed when you pass an **ISIN** and want to **force a specific market**.
+
+Supported MICs:
+
+| MIC | Exchange |
+| --- | --- |
+| XETR | XETRA |
+| XLON | London Stock Exchange |
+| XMIL | Borsa Italiana |
+| XAMS | Euronext Amsterdam |
+| XPAR | Euronext Paris |
+| XSWX | SIX Swiss Exchange |
+| XSTU | Stuttgart Stock Exchange |
+| XMUN | Gettex🔥 |
+| TGAT | Tradegate🔥 |
+
+If omitted, the script selects an exchange automatically (if possible).
+
+## **2️⃣ BONDPRICE(date, isin, stockExchange)**
+
+Returns the latest market price for a bond traded on **Euronext markets**.
+
+### **Parameters:**
+
+- `date` → always `Utils!$A$1`
+- `isin` → ISIN code of the bond
+- `stockExchange` → **MIC code (ISO 10383)** of the Euronext market where the bond is traded
+
+### **Supported Euronext markets (MIC codes):**
+
+| Exchange | MIC |
+| --- | --- |
+| Euronext Amsterdam | XAMS |
+| Euronext Brussels | XBRU |
+| Euronext Lisbon | XLIS |
+| Oslo Børs | XOSL |
+| Euronext Paris | XPAR |
+| Euronext Growth Brussels | ALXB |
+| Euronext Growth Milan | EXGM |
+| Euronext Growth Paris | ALXP |
+| Euronext Access Lisbon | ENXL |
+| Euronext Access Brussels | MLXB |
+| Euronext Access Paris | XMLI |
+| Euronext Expert Market | VPXB |
+| EuroTLX | ETLX |
+| MOT | MOTX |
+| Euronext Access Milan | XMOT |
+| Nordic Alternative Bond Market | XOAM |
+
+## **3️⃣ CRYPTOPRICE(date, symbol)**
+
+Returns the latest cryptocurrency price.
+
+### **Parameters:**
+
+- `date` → always `Utils!$A$1`
+- `symbol` → cryptocurrency ticker (e.g. `"BTC"`, `"ETH"`)
+
+> 🔑 Requires a CoinMarketCap API key (see installation).
+> 
+
+## **4️⃣ COMMODITYPRICE(date, name)**
+
+Returns spot prices for commodities in **EUR per gram**.
+
+**Parameters:**
+
+- `date` → always `Utils!$A$1`
+- `name` → name of the commodity (e.g. `"Gold"`)
+
+### Supported names:
+
+- `"Gold"`
+- `"Silver"`
+- `"Platinum"`
+- `"Palladium"`
+
+---
+
+# 🧪 **Examples**
+
+```
+=ETPPRICE(Utils!$A$1;"IE00BK5BQT80")           // Price of VWCE from a random exchange
+=ETPPRICE(Utils!$A$1;"IE00BK5BQT80";"XETR")    // Price of VWCE from XETRA
+=ETPPRICE(Utils!$A$1;"VWCE.DE")                // Price of VWCE via Yahoo Finance
+
+=BONDPRICE(Utils!$A$1;"IT0005672024";"MOTX")   // Italian government bond (MOT)
+=BONDPRICE(Utils!$A$1;"FR0014001NN8";"XPAR")   // French OAT on Euronext Paris
+=BONDPRICE(Utils!$A$1;"NL0015000QL2";"XAMS")   // Bond on Euronext Amsterdam
+
+=CRYPTOPRICE(Utils!$A$1;"BTC")                 // Bitcoin price
+
+=COMMODITYPRICE(Utils!$A$1;"Gold")             // Gold price (EUR/gram)
+```
 
 ---
 
