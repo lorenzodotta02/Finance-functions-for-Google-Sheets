@@ -1,4 +1,4 @@
-# **Finance Functions for Google Sheets**
+# **Finance Functions for Google Sheets** [![GitHub Downloads](https://img.shields.io/github/downloads/lorenzodotta02/Finance-functions-for-Google-Sheets/total.svg)](https://github.com/lorenzodotta02/Finance-functions-for-Google-Sheets/releases)
 
 A collection of custom Google Sheets functions designed as an alternative to `GOOGLEFINANCE()`
 
