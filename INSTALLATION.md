@@ -1,5 +1,11 @@
 # 🚀 Installation
 
+
+## ▶️ Video Tutorial
+[![Video Tutorial](http://img.youtube.com/vi/bbxOjh3JfUY/0.jpg)](http://www.youtube.com/watch?v=bbxOjh3JfUY "Finance Functions for Google Sheets Tutorial")
+
+## 📝 Written Tutorial
+
 ### Step 1 – Add the Script
 
 1. In Google Sheets, open **Extensions → Apps Script**.
@@ -26,3 +32,4 @@ Required only for `CRYPTOPRICE`.
     <img src="images/1.png" alt="Menu screenshot" width="420"/>
     
 3. Once the trigger is active, you can use the functions directly in your sheet.
+
