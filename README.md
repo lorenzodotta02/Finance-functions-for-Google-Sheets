@@ -149,3 +149,12 @@ Returns spot prices for commodities in **EUR per gram**.
 This project is licensed under the **GNU General Public License v3.0**.
 
 See the LICENSE file for full terms.
+
+---
+
+# 🛣️ Roadmap
+
+Planned features and improvements for upcoming releases:
+
+- [ ]  **XMUN Bonds:** Support for bonds traded on **Gettex (XMUN)**
+- [ ]  **TGAT Bonds:** Support for bonds traded on 
