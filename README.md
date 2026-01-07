@@ -157,4 +157,4 @@ See the LICENSE file for full terms.
 Planned features and improvements for upcoming releases:
 
 - [ ]  **XMUN Bonds:** Support for bonds traded on **Gettex (XMUN)**
-- [ ]  **TGAT Bonds:** Support for bonds traded on 
+- [x]  **TGAT Bonds:** Support for bonds traded on 
