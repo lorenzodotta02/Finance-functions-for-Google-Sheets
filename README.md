@@ -1,4 +1,6 @@
-# **Finance Functions for Google Sheets** [![GitHub Downloads](https://img.shields.io/github/downloads/lorenzodotta02/Finance-functions-for-Google-Sheets/total.svg)](https://github.com/lorenzodotta02/Finance-functions-for-Google-Sheets/releases) [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
+# **Finance Functions for Google Sheets** 
+[![GitHub Downloads](https://img.shields.io/github/downloads/lorenzodotta02/Finance-functions-for-Google-Sheets/total.svg)](https://github.com/lorenzodotta02/Finance-functions-for-Google-Sheets/releases) 
+[![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 
 A collection of custom Google Sheets functions designed as an alternative to `GOOGLEFINANCE()`
 
@@ -156,5 +158,5 @@ See the LICENSE file for full terms.
 
 Planned features and improvements for upcoming releases:
 
-- [ ]  **XMUN Bonds:** Support for bonds traded on **Gettex (XMUN)**
+- [x]  **XMUN Bonds:** Support for bonds traded on **Gettex (XMUN)**
 - [x]  **TGAT Bonds:** Support for bonds traded on 
