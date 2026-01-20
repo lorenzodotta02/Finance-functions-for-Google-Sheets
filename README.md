@@ -160,7 +160,7 @@ Planned features and improvements for upcoming releases:
 
 - [x]  **XMUN Bonds:** Support for bonds traded on **Gettex (XMUN)**
 - [x]  **TGAT Bonds:** Support for bonds traded on 
-- [] New LSE data source
-- [] ? Currency selection for ETP
-- [] Refactoring
-- [] Improved caching system 
+- [ ] New LSE data source
+- [ ] ? Currency selection for ETP
+- [ ] Refactoring
+- [ ] Improved caching system 
