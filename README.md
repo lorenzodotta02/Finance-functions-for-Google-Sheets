@@ -158,9 +158,9 @@ See the LICENSE file for full terms.
 
 Planned features and improvements for upcoming releases:
 
-- [x]  **XMUN Bonds:** Support for bonds traded on **Gettex (XMUN)**
-- [x]  **TGAT Bonds:** Support for bonds traded on 
-- [ ] New LSE data source
-- [ ] ? Currency selection for ETP
+- [x] **XMUN Bonds:** Support for bonds traded on **Gettex (XMUN)**
+- [x] **TGAT Bonds:** Support for bonds traded on 
+- [x] New London Stock Exchange data source
+- [ ] Currency selection for London Stock Exchange: GBP, GBX, USD
 - [ ] Refactoring
 - [ ] Improved caching system 
