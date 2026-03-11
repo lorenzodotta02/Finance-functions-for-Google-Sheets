@@ -162,5 +162,3 @@ Planned features and improvements for upcoming releases:
 - [x] **TGAT Bonds:** Support for bonds traded on 
 - [x] New London Stock Exchange data source
 - [x] Currency selection for London Stock Exchange
-- [ ] Refactoring
-- [ ] Improved caching system 
