@@ -157,9 +157,4 @@ See the LICENSE file for full terms.
 # 🛣️ Roadmap
 
 Planned features and improvements for upcoming releases:
-
-- [x] **XMUN Bonds:** Support for bonds traded on Gettex 
-- [x] **TGAT Bonds:** Support for bonds traded on Tradegate
-- [x] New London Stock Exchange data source
-- [x] Currency selection for London Stock Exchange
-- [x] Fix Euronext data source for bonds -> New API testing in progress...
+..
