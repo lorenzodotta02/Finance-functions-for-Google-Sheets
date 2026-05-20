@@ -1,8 +1,12 @@
-# **Finance Functions for Google Sheets** 
-[![GitHub Downloads](https://img.shields.io/github/downloads/lorenzodotta02/Finance-functions-for-Google-Sheets/total.svg)](https://github.com/lorenzodotta02/Finance-functions-for-Google-Sheets/releases) 
-[![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
-
-A collection of custom Google Sheets functions designed as an alternative to `GOOGLEFINANCE()`
+```
+███████╗███████╗ ██████╗ ███████╗                
+██╔════╝██╔════╝██╔════╝ ██╔════╝                    A collection of custom
+█████╗  █████╗  ██║  ███╗███████╗                    Google Sheets functions
+██╔══╝  ██╔══╝  ██║   ██║╚════██║                    designed as an alternative
+██║     ██║     ╚██████╔╝███████║                    to GOOGLEFINANCE()
+╚═╝     ╚═╝      ╚═════╝ ╚══════╝      
+```
+[![GitHub Downloads](https://img.shields.io/github/downloads/lorenzodotta02/Finance-functions-for-Google-Sheets/total.svg)](https://github.com/lorenzodotta02/Finance-functions-for-Google-Sheets/releases) [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 
 These functions retrieve **updated prices** for:
 - **Bonds**
@@ -12,40 +16,41 @@ These functions retrieve **updated prices** for:
 
 ---
 
-# 🚀 Installation
+# Installation
 
 Tutorial [here](./INSTALLATION.md)
 
 ---
 
-# ⚙️ **Available Custom Functions**
+# **Available Custom Functions**
 
 | Function | Purpose |
 | --- | --- |
-| `ETPPRICE(date; code; stockExchange)` | Returns the latest price for an ETP |
+| `ETPPRICE(date; code; [stockExchange]; [currency])` | Returns the latest price for an ETP (ETF/ETC/ETN) |
 | `BONDPRICE(date; isin; stockExchange)` | Returns the latest price for a bond |
 | `CRYPTOPRICE(date; symbol)` | Returns the latest cryptocurrency price  |
 | `COMMODITYPRICE(date; name)` | Returns the latest spot price of a commodity (EUR/gram) |
 
-> Important: date must always be Utils!$A$1, this cell auto-refreshes every 15 minutes and forces recalculation.
+> ⚠️ Important: date must always be Utils!$A$1, this cell auto-refreshes every 15 minutes and forces recalculation. 
 > 
 
-> If you use the US locale, replace semicolons ; with commas.
+> ⚠️ If you use the US locale, replace semicolons ; with commas.
 > 
 
 ---
 
-# 📥 **Function Inputs Explained in Detail**
+# **Function Inputs Explained**
 
-## **1️⃣ ETPPRICE(date; code; [stockExchange])**
-
-Fetches the price of an ETF/ETC/ETN.
+## **`ETPPRICE(date; code; [stockExchange]; [currency])`**
+Returns the latest price for an ETP (ETF/ETC/ETN)
 
 ### **Parameters:**
 
 - `date` → always `Utils!$A$1`
 - `code` → ISIN code/Yahoo Finance ticker
-- `stockExchange` → **MIC code (ISO 10383)** of the market where the ETP is traded
+- `stockExchange` → **OPTIONAL but recommended** MIC code (ISO 10383) of the market where the ETP is traded
+- `currency` → **OPTIONAL** Currency filter (e.g. "USD"). Only used when stockExchange is XLON (London Stock Exchange)
+
 
 ### **Optional parameter: `stockExchange`**
 
@@ -56,49 +61,54 @@ Supported MICs:
 | MIC | Exchange |
 | --- | --- |
 | XETR | XETRA |
-| XLON | London Stock Exchange |
+| XLON | London Stock Exchange 🔥|
 | XMIL | Borsa Italiana |
 | XAMS | Euronext Amsterdam |
 | XPAR | Euronext Paris |
 | XSWX | SIX Swiss Exchange |
 | XSTU | Stuttgart Stock Exchange |
-| XMUN | Gettex🔥 |
-| TGAT | Tradegate🔥 |
+| XMUN | Gettex |
+| TGAT | Tradegate |
 
 If omitted, the script selects an exchange automatically (if possible).
 
-## **2️⃣ BONDPRICE(date, isin, stockExchange)**
+### **Optional parameter: `currency`**
+Only applies when stockExchange is XLON. Use it to select the trading currency of the ETP on the London Stock Exchange.
 
-Returns the latest market price for a bond traded on **Euronext markets**.
+## **`BONDPRICE(date; isin; stockExchange)`**
+Returns the latest price for a bond
 
 ### **Parameters:**
 
 - `date` → always `Utils!$A$1`
 - `isin` → ISIN code of the bond
-- `stockExchange` → **MIC code (ISO 10383)** of the Euronext market where the bond is traded
+- `stockExchange` → **MANDATORY** MIC code (ISO 10383) of the market where the bond is traded
 
-### **Supported Euronext markets (MIC codes):**
+Supported MICs:
 
-| Exchange | MIC |
-| --- | --- |
-| Euronext Amsterdam | XAMS |
-| Euronext Brussels | XBRU |
-| Euronext Lisbon | XLIS |
-| Oslo Børs | XOSL |
-| Euronext Paris | XPAR |
-| Euronext Growth Brussels | ALXB |
-| Euronext Growth Milan | EXGM |
-| Euronext Growth Paris | ALXP |
-| Euronext Access Lisbon | ENXL |
-| Euronext Access Brussels | MLXB |
-| Euronext Access Paris | XMLI |
-| Euronext Expert Market | VPXB |
-| EuroTLX | ETLX |
-| MOT | MOTX |
-| Euronext Access Milan | XMOT |
-| Nordic Alternative Bond Market | XOAM |
+| MIC  | Exchange                       |
+| ---- | ------------------------------ |
+| XAMS | Euronext Amsterdam             |
+| XBRU | Euronext Brussels              |
+| XLIS | Euronext Lisbon                |
+| XOSL | Oslo Børs                      |
+| XPAR | Euronext Paris                 |
+| ALXB | Euronext Growth Brussels       |
+| EXGM | Euronext Growth Milan          |
+| ALXP | Euronext Growth Paris          |
+| ENXL | Euronext Access Lisbon         |
+| MLXB | Euronext Access Brussels       |
+| XMLI | Euronext Access Paris          |
+| VPXB | Euronext Expert Market         |
+| ETLX | EuroTLX                        |
+| MOTX | MOT                            |
+| XMOT | Euronext Access Milan          |
+| XOAM | Nordic Alternative Bond Market |
+| XMUN | Gettex 🔥|
+| TGAT | Tradegate 🔥|
 
-## **3️⃣ CRYPTOPRICE(date, symbol)**
+
+## **`CRYPTOPRICE(date; symbol)`**
 
 Returns the latest cryptocurrency price.
 
@@ -107,10 +117,10 @@ Returns the latest cryptocurrency price.
 - `date` → always `Utils!$A$1`
 - `symbol` → cryptocurrency ticker (e.g. `"BTC"`, `"ETH"`)
 
-> 🔑 Requires a CoinMarketCap API key (see installation).
+> ⚠️ Requires a CoinMarketCap API key (see installation).
 > 
 
-## **4️⃣ COMMODITYPRICE(date, name)**
+## **`COMMODITYPRICE(date; name)`**
 
 Returns spot prices for commodities in **EUR per gram**.
 
@@ -128,25 +138,26 @@ Returns spot prices for commodities in **EUR per gram**.
 
 ---
 
-# 🧪 **Examples**
+# **Examples**
 
 ```
-=ETPPRICE(Utils!$A$1;"IE00BK5BQT80")           // Price of VWCE from a random exchange
-=ETPPRICE(Utils!$A$1;"IE00BK5BQT80";"XETR")    // Price of VWCE from XETRA
-=ETPPRICE(Utils!$A$1;"VWCE.DE")                // Price of VWCE via Yahoo Finance
+=ETPPRICE(Utils!$A$1;"IE00BK5BQT80")               // Price of VWCE from a random exchange
+=ETPPRICE(Utils!$A$1;"IE00BK5BQT80";"XETR")        // Price of VWCE from XETRA
+=ETPPRICE(Utils!$A$1;"VWCE.DE")                    // Price of VWCE via Yahoo Finance
+=ETPPRICE(Utils!$A$1;"IE00B3F81R35";"XLON";"GBP")  // Price of IEBC from LSE in GBP
 
-=BONDPRICE(Utils!$A$1;"IT0005672024";"MOTX")   // Italian government bond (MOT)
-=BONDPRICE(Utils!$A$1;"FR0014001NN8";"XPAR")   // French OAT on Euronext Paris
-=BONDPRICE(Utils!$A$1;"NL0015000QL2";"XAMS")   // Bond on Euronext Amsterdam
+=BONDPRICE(Utils!$A$1;"IT0005672024";"MOTX")       // Italian government bond (MOT)
+=BONDPRICE(Utils!$A$1;"FR0014001NN8";"XPAR")       // French OAT on Euronext Paris
+=BONDPRICE(Utils!$A$1;"NL0015000QL2";"XAMS")       // Bond on Euronext Amsterdam
 
-=CRYPTOPRICE(Utils!$A$1;"BTC")                 // Bitcoin price
+=CRYPTOPRICE(Utils!$A$1;"BTC")                     // Bitcoin price
 
-=COMMODITYPRICE(Utils!$A$1;"Gold")             // Gold price (EUR/gram)
+=COMMODITYPRICE(Utils!$A$1;"Gold")                 // Gold price (EUR/gram)
 ```
 
 ---
 
-# 📜 License
+# License
 
 This project is licensed under the **GNU General Public License v3.0**.
 
@@ -154,7 +165,7 @@ See the LICENSE file for full terms.
 
 ---
 
-# 🛣️ Roadmap
+# Roadmap
 
 Planned features and improvements for upcoming releases:
-..
+...
