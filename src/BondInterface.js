@@ -1,6 +1,5 @@
 /**
  * Returns the current market price of a bond.
- * Currently supports: Bonds traded on Borsa Italiana.
  *
  * @param {Utils!$A$1} date The reference date cell (Utils!$A$1)
  *                          This is required to ensure that price quotes stay updated

@@ -1,5 +1,5 @@
 // =======================================================================================================
-// TIME / TRIGGER FUNCTIONS
+// TIME / TRIGGER
 // =======================================================================================================
 
 function onOpen() {
@@ -27,7 +27,6 @@ function createAutoTrigger() {
   }
 
   autoUpdate();
-
 }
 
 function deleteAutoUpdateTrigger() {
@@ -41,7 +40,7 @@ function deleteAutoUpdateTrigger() {
 }
 
 function autoUpdate() {
-  var sheetName = 'Utils';
+  var sheetName = "Utils";
   getOrCreateHiddenSheet(sheetName);
   updateDateCell(sheetName);
 }
@@ -65,27 +64,28 @@ function updateDateCell(sheetName) {
 }
 
 // =======================================================================================================
-// COMMONLY USED FUNCTIONS
+// PRICE PERSISTENCE
 // =======================================================================================================
 
 function savePrice(key, value) {
-  var props = PropertiesService.getScriptProperties();
-  props.setProperty(key, value);
-  Logger.log("Saved" + " " + key + " " + value);
+  PropertiesService.getScriptProperties().setProperty(key, value);
+  Logger.log("Saved " + key + " " + value);
 }
 
 function loadPrice(key) {
-  Logger.log("Loaded from memory");
+  Logger.log("Loaded from memory: " + key);
   const v = PropertiesService.getScriptProperties().getProperty(key);
   return v ? parseFloat(v) : null;
 }
 
+// =======================================================================================================
+// SHEET HELPERS
+// =======================================================================================================
+
 function writeToSheet(cell, number) {
-  var sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
-  sheet.getRange(cell).setValue(number);
+  SpreadsheetApp.getActiveSpreadsheet().getActiveSheet().getRange(cell).setValue(number);
 }
 
 function readFromSheet(cell) {
-  var sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
-  return sheet.getRange(cell).getValue();
+  return SpreadsheetApp.getActiveSpreadsheet().getActiveSheet().getRange(cell).getValue();
 }

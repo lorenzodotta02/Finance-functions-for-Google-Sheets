@@ -1,5 +1,5 @@
 // =======================================================================================================
-// ETP.gs
+// ETP
 // =======================================================================================================
 
 const URL_YF = "https://query1.finance.yahoo.com/v8/finance/chart/";
@@ -20,20 +20,37 @@ const ERR_INVALID_JSON = "Invalid JSON response: ";
 const ERR_PRICE_NOT_FOUND = "ETP price not found in response";
 const ERR_INVALID_PRICE = "Invalid ETP price: ";
 
+const EXCHANGE_TRADEGATE = "TRADEGATE";
+const EXCHANGE_GETTEX    = "GETTEX";
+const EXCHANGE_LSE       = "LONDON STOCK EXCHANGE";
+
+const GETTEX_RIC_SUFFIX = ".GTX";
+
+const URL_LSE = "https://api.londonstockexchange.com/api/gw/lse/instruments/alldata/";
+const KEY_LSE_TIDM      = "tidm";
+const KEY_LSE_LASTPRICE = "lastprice";
+const KEY_LSE_MIDPRICE  = "midPrice";
+const KEY_LSE_LASTCLOSE = "lastclose";
+const KEY_LSE_BID       = "bid";
+const KEY_LSE_OFFER     = "offer";
+
+const JUSTETF_QUOTE_PARAMS = "quote?locale=en&currency=EUR";
+
+
 const MIC_TABLE = {
-  "XETR": { jetf: "XETRA", yf: ".DE" },
-  "XLON": { jetf: "LONDON STOCK EXCHANGE", yf: ".L" },
-  "XMIL": { jetf: "BORSA ITALIANA", yf: ".MI" },
-  "XAMS": { jetf: "EURONEXT AMSTERDAM", yf: ".AS" },
-  "XPAR": { jetf: "EURONEXT PARIS", yf: ".PA" },
-  "XSWX": { jetf: "SIX SWISS EXCHANGE", yf: ".SW" },
+  "XETR": { jetf: "XETRA",                   yf: ".DE" },
+  "XLON": { jetf: "LONDON STOCK EXCHANGE",    yf: null  },
+  "XMIL": { jetf: "BORSA ITALIANA",           yf: ".MI" },
+  "XAMS": { jetf: "EURONEXT AMSTERDAM",       yf: ".AS" },
+  "XPAR": { jetf: "EURONEXT PARIS",           yf: ".PA" },
+  "XSWX": { jetf: "SIX SWISS EXCHANGE",       yf: ".SW" },
   "XSTU": { jetf: "STUTTGART STOCK EXCHANGE", yf: ".SG" },
-  "XMUN": { jetf: "GETTEX", yf: null },
-  "TGAT": { jetf: "TRADEGATE", yf: null }
+  "XMUN": { jetf: "GETTEX",                   yf: null  },
+  "TGAT": { jetf: "TRADEGATE",                yf: null  }
 };
 
 // =======================================================================================================
-// Tickers.gs
+// Tickers
 // =======================================================================================================
 
 const URL_JUSTETF_PROFILE = "https://www.justetf.com/en/etf-profile.html?isin=";
@@ -46,16 +63,16 @@ const REGEX_TABLE_CELL = /<td[^>]*>([\s\S]*?)<\/td>/gi;
 const REGEX_EXCHANGE_TABLE = /Exchange|Ticker/i;
 
 // =======================================================================================================
-// Bonds.gs
+// Bond
 // =======================================================================================================
 
-const URL_EURONEXT_INTRADAY = "https://live.euronext.com/en/intraday_chart/getDetailedQuoteAjax/";
-const URL_EURONEXT_FALLBACK = "https://live.euronext.com/en/ajax/getDetailedQuote/";
-const REGEX_EURONEXT_LAST_TRADED = /Last Traded[\s\S]*?font-weight-medium">\s*([\d.,]+)/i;
-const REGEX_EURONEXT_VALUATION_CLOSE = /id="col-header-instrument-price"[^>]*>\s*([\d.,]+)/i;
+const URL_EURONEXT_API = "https://euronext-gateway-api.onrender.com/price";
+const URL_BOND = "https://www.borsaitaliana.it/borsa/obbligazioni/mot/obbligazioni-in-euro/scheda/";
+const REGEX_BOND_PRICE = /(\d{2,3},\d{1,3})/;
+const USER_AGENT_BOND = "Mozilla/5.0";
 
 // =======================================================================================================
-// Crypto.gs
+// Crypto
 // =======================================================================================================
 
 const URL_CMC_QUOTES = "https://pro-api.coinmarketcap.com/v1/cryptocurrency/quotes/latest";
@@ -65,13 +82,13 @@ const HEADER_CMC_APIKEY = "X-CMC_PRO_API_KEY";
 const CMC_CONVERT_TO = "EUR";
 
 // =======================================================================================================
-// Commodity.gs
+// Commodity
 // =======================================================================================================
 
 const URL_COMMODITY = {
-  gold: "https://www.teleborsa.it/valute/gold-spot-xauusd-RjAuWEFVVVNE",
-  silver: "https://www.teleborsa.it/valute/silver-spot-xagusd-RjAuWEFHVVNE",
+  gold:      "https://www.teleborsa.it/valute/gold-spot-xauusd-RjAuWEFVVVNE",
+  silver:    "https://www.teleborsa.it/valute/silver-spot-xagusd-RjAuWEFHVVNE",
   palladium: "https://www.teleborsa.it/valute/palladium-spot-xpdusd-RjAuWFBEVVNE",
-  platinum: "https://www.teleborsa.it/valute/platinum-spot-xptusd-RjAuWFBUVVNE"
+  platinum:  "https://www.teleborsa.it/valute/platinum-spot-xptusd-RjAuWFBUVVNE"
 };
 const REGEX_COMMODITY_PRICE = /(\d{1,3},\d{2,3})/;
