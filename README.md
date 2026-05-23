@@ -163,4 +163,4 @@ See the LICENSE file for full terms.
 # Roadmap
 
 Planned features and improvements for upcoming releases:
-...
+- [ ] Improve scalability and performance of the Euronext bond pricing API
