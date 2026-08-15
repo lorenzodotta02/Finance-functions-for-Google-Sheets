@@ -72,6 +72,7 @@ Only applies when stockExchange is XLON. Use it to select the trading currency o
 
 ## **`BONDPRICE(date; isin; stockExchange)`**
 Returns the latest price for a bond
+⚠️ **Important:** if `BONDPRICE()` returns no value or an error on the first call, try calling it again after about 1 minute.
 
 ### **Parameters:**
 
