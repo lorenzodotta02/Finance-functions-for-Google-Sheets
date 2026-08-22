@@ -168,4 +168,4 @@ Planned features and improvements for upcoming releases:
 - [ ] Improve scalability and performance of the Euronext bond pricing API
 - [ ] Add `FUNDPRICE()` for mutual funds, SICAVs, and non-ETF investment funds
 - [ ] Flutter companion app
-- [ ] London Stock Exchange (XLON) bonds
+- [X] London Stock Exchange (XLON) bonds
