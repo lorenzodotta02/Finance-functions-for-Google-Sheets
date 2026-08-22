@@ -166,6 +166,7 @@ See the LICENSE file for full terms.
 
 Planned features and improvements for upcoming releases:
 - [ ] Improve scalability and performance of the Euronext bond pricing API
-- [ ] Add `FUNDPRICE()` for mutual funds, SICAVs, and non-ETF investment funds
+- [ ] Add `FUNDPRICE()` for mutual funds, SICAVs, pension funds, and non-ETF investment funds
+  - [X] Amundi SecondaPensione
 - [ ] Flutter companion app
 - [X] London Stock Exchange (XLON) bonds
