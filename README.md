@@ -7,7 +7,24 @@ These functions retrieve **updated prices** for:
 - **Bonds**
 - **ETPs (ETFs / ETCs / ETNs)**
 - **Cryptocurrencies** 
-- **Commodities** 
+- **Commodities**
+
+# ⚠️ IMPORTANT NOTICE
+
+> [!WARNING]
+> **`BONDPRICE()` is currently not working.**
+>
+> In addition, **all functions that retrieve data from Gettex (`XMUN`) are currently unavailable**.
+>
+> I am currently working on restoring the affected functionality and investigating possible solutions.
+>
+> **Affected functionality:**
+>
+> * `BONDPRICE()`
+> * `ETPPRICE()` when using Gettex (`XMUN`)
+> * Any other function retrieving prices through Gettex
+>
+> I apologize for the inconvenience. Updates will be published as soon as a solution is available.
 
 ---
 
