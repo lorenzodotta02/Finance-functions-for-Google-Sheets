@@ -10,9 +10,8 @@ These functions retrieve **updated prices** for:
 - **Commodities**
 
 # ⚠️ IMPORTANT NOTICE
-
 > [!WARNING]
-> **`BONDPRICE()` is currently not working.**
+> **`BONDPRICE()` is currently not working for most exchanges.**
 >
 > In addition, **all functions that retrieve data from Gettex (`XMUN`) are currently unavailable**.
 >
@@ -20,11 +19,14 @@ These functions retrieve **updated prices** for:
 >
 > **Affected functionality:**
 >
-> * `BONDPRICE()`
+> * `BONDPRICE()` for all Euronext MICs (`XPAR`, `XAMS`, `XBRU`, `XLIS`, `XDUB`, etc.)
 > * `ETPPRICE()` when using Gettex (`XMUN`)
-> * Any other function retrieving prices through Gettex
 >
-> I apologize for the inconvenience. Updates will be published as soon as a solution is available.
+> **Still working:**
+>
+> * `BONDPRICE()` on `TGAT` and `MOTX` / `XMOT`
+> * `ETPPRICE()` on `XETR`, `XLON`, `XMIL`, `XAMS`, `XPAR`, `XSWX`, `XSTU`, `TGAT`
+> * `COMMODITYPRICE()` and `CRYPTOPRICE()`
 
 ---
 
