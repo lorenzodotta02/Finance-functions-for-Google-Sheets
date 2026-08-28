@@ -190,3 +190,4 @@ Planned features and improvements for upcoming releases:
   - [X] Fon.te 
 - [ ] Flutter companion app
 - [X] London Stock Exchange (XLON) bonds
+- [ ] **Add a layering system for the Render-hosted API URLs, so that if a service is suspended a new backend URL can be linked to the same address without editing the script**
