@@ -191,5 +191,5 @@ Planned features and improvements for upcoming releases:
 - [ ] Flutter companion app
 - [X] London Stock Exchange (XLON) bonds
 - [ ] **Add a layering system for the Render-hosted API URLs, so that if a service is suspended a new backend URL can be linked to the same address without editing the script**
-- [X] Restore Gettex API
-- [ ] Restore Euronext API
+- [X] Restore Gettex API -> see next release
+- [x] Restore Euronext API -> see next release
