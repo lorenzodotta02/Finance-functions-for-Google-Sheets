@@ -184,12 +184,12 @@ See the LICENSE file for full terms.
 # Roadmap
 
 Planned features and improvements for upcoming releases:
-- [ ] Improve scalability and performance of the Euronext bond pricing API
-- [ ] Add `FUNDPRICE()` for mutual funds, SICAVs, pension funds, and non-ETF investment funds
+- [X] Improve scalability and performance of the Euronext bond pricing API
+- [X] Add `FUNDPRICE()` for mutual funds, SICAVs, pension funds, and non-ETF investment funds
   - [X] Amundi SecondaPensione
-  - [X] Fon.te 
-- [ ] Flutter companion app
+  - [X] Fon.te
+  - [X] Allianz Previdenza, Insieme, Orizzonte Previdenza
 - [X] London Stock Exchange (XLON) bonds
-- [ ] **Add a layering system for the Render-hosted API URLs, so that if a service is suspended a new backend URL can be linked to the same address without editing the script**
+- [X] **Add a layering system for the Render-hosted API URLs, so that if a service is suspended a new backend URL can be linked to the same address without editing the script**
 - [X] Restore Gettex API -> see next release
 - [x] Restore Euronext API -> see next release
