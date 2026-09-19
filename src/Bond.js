@@ -15,6 +15,8 @@ function bondPrice(isin, stockExchange) {
       price = fetchTradegatePrice(isin);
     } else if (stockExchange === "MOTX" || stockExchange === "XMOT") {
       price = bondPriceBorsaItaliana(isin);
+    } else if (stockExchange === "XLON") {
+      price = bondPriceLSE(isin);
     } else {
       price = bondPriceEuronext(isin, stockExchange);
     }
@@ -81,6 +83,73 @@ function bondPriceGettexByIsin(isin) {
     return getGettexBondLastPrice(ric);
   } catch (e) {
     Logger.log("ERROR bondPriceGettexByIsin(" + isin + "): " + e.message);
+    return null;
+  }
+}
+
+function getTidmFromIsinLSE(isin) {
+  try {
+    const url =
+      URL_LSE_BOND_AUTOCOMPLETE +
+      "?q=" + encodeURIComponent(isin) +
+      "&size=3";
+
+    const response = UrlFetchApp.fetch(url, { muteHttpExceptions: true });
+    if (response.getResponseCode() !== 200) {
+      throw new Error("HTTP error: " + response.getResponseCode());
+    }
+
+    const json = JSON.parse(response.getContentText());
+    const instruments = json?.instruments;
+    if (!instruments || instruments.length === 0) throw new Error("No instrument found.");
+
+    const bond = instruments.find(i => i.category === LSE_BOND_CATEGORY) || instruments[0];
+    if (bond.category !== LSE_BOND_CATEGORY) {
+      throw new Error("ISIN found but not categorized as BONDS (category: " + bond.category + ").");
+    }
+
+    const tidm = bond.tidm;
+    if (!tidm) throw new Error("TIDM missing in response.");
+
+    return tidm;
+
+  } catch (e) {
+    Logger.log("ERROR getTidmFromIsinLSE(" + isin + "): " + e.message);
+    return null;
+  }
+}
+
+function bondPriceLSE(isin) {
+  try {
+    const tidm = getTidmFromIsinLSE(isin);
+    if (!tidm) throw new Error("TIDM not found for ISIN.");
+
+    const url = URL_LSE + encodeURIComponent(tidm);
+    const res = UrlFetchApp.fetch(url, { muteHttpExceptions: true });
+
+    if (res.getResponseCode() !== 200)
+      throw new Error("HTTP " + res.getResponseCode());
+
+    const data = JSON.parse(res.getContentText());
+
+    if (!data || !data[KEY_LSE_TIDM])
+      throw new Error("Invalid LSE payload");
+
+    const price =
+      data[KEY_LSE_LASTPRICE] ??
+      data[KEY_LSE_MIDPRICE]  ??
+      data[KEY_LSE_LASTCLOSE] ??
+      (data[KEY_LSE_BID] && data[KEY_LSE_OFFER]
+        ? (data[KEY_LSE_BID] + data[KEY_LSE_OFFER]) / 2
+        : null);
+
+    if (typeof price !== "number" || isNaN(price) || price <= 0)
+      throw new Error("Invalid LSE price value");
+
+    return price;
+
+  } catch (e) {
+    Logger.log("ERROR bondPriceLSE(" + isin + "): " + e.message);
     return null;
   }
 }
