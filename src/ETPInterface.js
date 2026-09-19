@@ -10,13 +10,12 @@
  * @customfunction
  */
 function ETPPRICE(date, code, stockExchange, currency) {
-  const isinRegex = /^[A-Z]{2}[A-Z0-9]{10}$/;
 
   if (stockExchange) {
     return etpPriceByIsinAndExchange(code, stockExchange, currency);
   }
 
-  if (isinRegex.test(code)) {
+  if (ISIN_REGEX.test(code)) {
     return etpPriceByIsin(code);
   }
 
