@@ -131,6 +131,72 @@ Returns the latest **NAV (Net Asset Value)** of a fund, expressed in the fund's 
 | `FONTE` | Fonte |
 | `ALLIANZ` | Previdenza, Insieme, Orizzonte Previdenza |
 
+## **Supported funds (full list)**
+
+Complete list of the funds supported by `FUNDPRICE()`, with the `ISSUER.FUND:SUBFUND[:VARIANT[:CLASS]]` code to use.
+
+> The **ISIN** is accepted as `code` **only for Amundi** funds. For **Fonte** and **Allianz** the ISIN is not supported: use the fund code.
+
+### **Amundi SecondaPensione** (`AMUNDI`)
+
+| Line | Code | ISIN |
+| --- | --- | --- |
+| Bilanciata | `AMUNDI.SECPE:BIL` | `QS0000003562` |
+| Espansione | `AMUNDI.SECPE:ESP` | `QS0000003561` |
+| Garanzia | `AMUNDI.SECPE:GAR` | `QS0000013033` |
+| Prudente | `AMUNDI.SECPE:PRU` | `QS0000003560` |
+| Sviluppo | `AMUNDI.SECPE:SVIL` | `QS0000003564` |
+
+### **Fonte Fondo Pensione Fonte** (`FONTE`)
+
+| Line | Code | ISIN |
+| --- | --- | --- |
+| Comparto Conservativo | `FONTE.FONTE:CON` | — |
+| Comparto Sviluppo | `FONTE.FONTE:SVIL` | — |
+| Comparto Crescita | `FONTE.FONTE:CRE` | — |
+| Comparto Dinamico | `FONTE.FONTE:DIN` | — |
+
+### **Allianz** (`ALLIANZ`)
+
+#### Allianz Previdenza (`PREVI`)
+
+| Line | Code | ISIN |
+| --- | --- | --- |
+| Linea Azionaria | `ALLIANZ.PREVI:AZ` | — |
+| Linea Bilanciata | `ALLIANZ.PREVI:BIL` | — |
+| Linea Flessibile Garanzia Restituzione Capitale | `ALLIANZ.PREVI:GAR` | — |
+| Linea Flessibile Gar. Res. Cap. Ex L. Gar LA | `ALLIANZ.PREVI:GAR:LA` | — |
+| Linea Flessibile Gar. Res. Cap. Ex L.1 Prev | `ALLIANZ.PREVI:GAR:PREV` | — |
+| Linea Multiasset | `ALLIANZ.PREVI:MULTI` | — |
+| Linea Obbligazionaria Breve Termine | `ALLIANZ.PREVI:OBLBT` | — |
+| Linea Obbligazionaria Lungo Termine | `ALLIANZ.PREVI:OBLLT` | — |
+
+#### Allianz Insieme (`INSIE`)
+
+| Line | Code | ISIN |
+| --- | --- | --- |
+| Linea Azionaria | `ALLIANZ.INSIE:AZ` | — |
+| Linea Bilanciata | `ALLIANZ.INSIE:BIL` | — |
+| Linea Flessibile Garanzia Restituzione Capitale | `ALLIANZ.INSIE:GAR` | — |
+| Linea Multiasset | `ALLIANZ.INSIE:MULTI` | — |
+| Linea Obbligazionaria | `ALLIANZ.INSIE:OBL` | — |
+| Linea Obbligazionaria Breve Termine | `ALLIANZ.INSIE:OBLBT` | — |
+| Linea Obbligazionaria Lungo Termine | `ALLIANZ.INSIE:OBLLT` | — |
+
+#### Allianz Orizzonte Previdenza (`ORIZZ`)
+
+| Line | Code | ISIN |
+| --- | --- | --- |
+| Azionario Globale | `ALLIANZ.ORIZZ:AZ` | — |
+| Bilanciato | `ALLIANZ.ORIZZ:BIL` | — |
+| Obbligazionario | `ALLIANZ.ORIZZ:OBL` | — |
+| Formula Attiva | `ALLIANZ.ORIZZ:FORMU:A` | — |
+| Formula Equilibrata | `ALLIANZ.ORIZZ:FORMU:E` | — |
+| Formula Moderata | `ALLIANZ.ORIZZ:FORMU:M` | — |
+| Formula Serena | `ALLIANZ.ORIZZ:FORMU:S` | — |
+| Formula Attiva Classe A | `ALLIANZ.ORIZZ:FORMU:A:CLA` | — |
+| Formula Equilibrata Classe A | `ALLIANZ.ORIZZ:FORMU:E:CLA` | — |
+
 ## **`CRYPTOPRICE(date; symbol)`**
 
 Returns the latest cryptocurrency price.
