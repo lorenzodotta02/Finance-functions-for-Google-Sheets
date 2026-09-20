@@ -6,27 +6,9 @@ A collection of custom Google Sheets functions designed as an alternative to `GO
 These functions retrieve **updated prices** for:
 - **Bonds**
 - **ETPs (ETFs / ETCs / ETNs)**
-- **Cryptocurrencies** 
+- **Pension funds / mutual funds**
+- **Cryptocurrencies**
 - **Commodities**
-
-# ⚠️ IMPORTANT NOTICE
-> [!WARNING]
-> **`BONDPRICE()` is currently not working for most exchanges.**
->
-> In addition, **all functions that retrieve data from Gettex (`XMUN`) are currently unavailable**.
->
-> I am currently working on restoring the affected functionality and investigating possible solutions.
->
-> **Affected functionality:**
->
-> * `BONDPRICE()` for all Euronext MICs (`XPAR`, `XAMS`, `XBRU`, `XLIS`, `XDUB`, etc.)
-> * `ETPPRICE()` when using Gettex (`XMUN`)
->
-> **Still working:**
->
-> * `BONDPRICE()` on `TGAT` and `MOTX` / `XMOT`
-> * `ETPPRICE()` on `XETR`, `XLON`, `XMIL`, `XAMS`, `XPAR`, `XSWX`, `XSTU`, `TGAT`
-> * `COMMODITYPRICE()` and `CRYPTOPRICE()`
 
 ---
 
@@ -42,7 +24,8 @@ Tutorial [here](./INSTALLATION.md)
 | --- | --- |
 | `ETPPRICE(date; code; [stockExchange]; [currency])` | Returns the latest price for an ETP (ETF/ETC/ETN) |
 | `BONDPRICE(date; isin; stockExchange)` | Returns the latest price for a bond |
-| `CRYPTOPRICE(date; symbol)` | Returns the latest cryptocurrency price  |
+| `FUNDPRICE(date; code)` | Returns the latest NAV of a fund |
+| `CRYPTOPRICE(date; symbol)` | Returns the latest cryptocurrency price |
 | `COMMODITYPRICE(date; name)` | Returns the latest spot price of a commodity (EUR/gram) |
 
 > ⚠️ Important: date must always be Utils!$A$1, this cell auto-refreshes every 15 minutes and forces recalculation. 
@@ -122,7 +105,31 @@ Supported MICs:
 | XOAM | Nordic Alternative Bond Market |
 | XMUN | Gettex 🔥|
 | TGAT | Tradegate 🔥|
+| XLON | London Stock Exchange 🔥 |
 
+## **`FUNDPRICE(date; code)`**
+
+Returns the latest **NAV (Net Asset Value)** of a fund, expressed in the fund's native currency.
+
+### **Parameters:**
+
+- `date` → always `Utils!$A$1`
+- `code` → fund code in the format `ISSUER.FUND:SUBFUND[:VARIANT[:CLASS]]`. For **Amundi** funds only, the **ISIN** is also accepted
+
+### **Accepted values for `code`**
+
+| Format | Example | Issuers |
+| --- | --- | --- |
+| `ISSUER.FUND:SUBFUND[:VARIANT[:CLASS]]` | `"AMUNDI.SECPE:BIL"` | All |
+| ISIN | `"QS0000003562"` | Amundi only |
+
+### **Supported issuers**
+
+| Issuer | Fund |
+| --- | --- |
+| `AMUNDI` | SecondaPensione |
+| `FONTE` | Fonte |
+| `ALLIANZ` | Previdenza, Insieme, Orizzonte Previdenza |
 
 ## **`CRYPTOPRICE(date; symbol)`**
 
@@ -164,7 +171,12 @@ Returns spot prices for commodities in **EUR per gram**.
 
 =BONDPRICE(Utils!$A$1;"IT0005672024";"MOTX")       // Italian government bond (MOT)
 =BONDPRICE(Utils!$A$1;"FR0014001NN8";"XPAR")       // French OAT on Euronext Paris
-=BONDPRICE(Utils!$A$1;"NL0015000QL2";"XAMS")       // Bond on Euronext Amsterdam
+=BONDPRICE(Utils!$A$1;"GB0030517931";"XLON")       // Bond on London Stock Exchange
+
+=FUNDPRICE(Utils!$A$1;"QS0000003562")              // NAV of Secondapensione bilanciata via ISIN
+=FUNDPRICE(Utils!$A$1;"AMUNDI.SECPE:BIL")          // NAV of Secondapensione bilanciata via fund code
+=FUNDPRICE(Utils!$A$1;"FONTE.FONTE:CON")           // NAV of Fonte Comparto Conservativo
+=FUNDPRICE(Utils!$A$1;"ALLIANZ.INSIE:BIL")         // NAV of Allianz INSIEME Linea Bilanciata
 
 =CRYPTOPRICE(Utils!$A$1;"BTC")                     // Bitcoin price
 
@@ -184,12 +196,4 @@ See the LICENSE file for full terms.
 # Roadmap
 
 Planned features and improvements for upcoming releases:
-- [X] Improve scalability and performance of the Euronext bond pricing API
-- [X] Add `FUNDPRICE()` for mutual funds, SICAVs, pension funds, and non-ETF investment funds
-  - [X] Amundi SecondaPensione
-  - [X] Fon.te
-  - [X] Allianz Previdenza, Insieme, Orizzonte Previdenza
-- [X] London Stock Exchange (XLON) bonds
-- [X] **Add a layering system for the Render-hosted API URLs, so that if a service is suspended a new backend URL can be linked to the same address without editing the script**
-- [X] Restore Gettex API -> see next release
-- [x] Restore Euronext API -> see next release
+...
