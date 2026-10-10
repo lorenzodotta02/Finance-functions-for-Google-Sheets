@@ -263,3 +263,5 @@ See the LICENSE file for full terms.
 
 Planned features and improvements for upcoming releases:
 - [X] FUNDPRICE: Fondo Telemaco
+- [ ] New FFGS website
+- [ ] Status page in FFGS website
